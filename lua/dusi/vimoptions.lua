@@ -16,4 +16,6 @@ vim.g.mapleader = " "
 -- Keymaps
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('i', 'jj', '<Esc>')
-vim.keymap.set('i', 'kk', '<Esc>')
+
+vim.keymap.set('n', '<leader>n', '<cmd>bnext<CR>')
+vim.keymap.set('n', '<leader>p', '<cmd>bprev<CR>')
