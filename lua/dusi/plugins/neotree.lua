@@ -3,11 +3,11 @@ return {
     branch = "v3.x",
     dependencies = {
         "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons", 
+        "nvim-tree/nvim-web-devicons",
         "MunifTanjim/nui.nvim",
     },
     config = function()
-        vim.keymap.set('n', '<C-n>', 
+        vim.keymap.set('n', '<C-n>',
             function()
                 local neotree = require("neo-tree.command")
                 neotree.execute({ toggle = true, source = "filesystem", position = "left" })
