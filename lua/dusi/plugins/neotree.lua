@@ -7,10 +7,9 @@ return {
         "MunifTanjim/nui.nvim",
     },
     config = function()
-        vim.keymap.set('n', '<C-n>',
-            function()
-                local neotree = require("neo-tree.command")
-                neotree.execute({ toggle = true, source = "filesystem", position = "left" })
+        vim.keymap.set('n', '<C-n>', function()
+                local command = require("neo-tree.command")
+                command.execute({ toggle = true, source = "filesystem", position = "left" })
             end,
             { noremap = true, silent = true }
         )

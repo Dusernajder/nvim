@@ -9,7 +9,7 @@ return {
         'williamboman/mason-lspconfig.nvim',
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "csharp_ls" }
+                ensure_installed = { "lua_ls", "csharp_ls", "ts_ls" }
             })
         end
     },
@@ -20,11 +20,12 @@ return {
             local util = require("lspconfig.util")
 
             lspconfig.lua_ls.setup({})
+            lspconfig.ts_ls.setup({})
             lspconfig.csharp_ls.setup({
                 cmd = { vim.fn.stdpath("data") .. "/mason/bin/csharp-ls" },
                 cmd_env = { DOTNET_ROOT = "/opt/homebrew/opt/dotnet@8/libexec" },
                 root_dir = function(fname)
-                    return util.root_pattern '*.sln'(fname) or util.root_pattern '*.csproj'(fname)
+                    return util.root_pattern '*.sln' (fname) or util.root_pattern '*.csproj' (fname)
                 end,
                 filetypes = { "cs" },
             })
@@ -33,7 +34,7 @@ return {
             vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
             vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
             vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-            vim.keymap.set('n', '<leader>q', vim.diagnostic.goto_next)
+            vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -61,6 +62,17 @@ return {
                     end, opts)
                 end
             })
+
+            -- Save file before save
+            --
+            -- vim.api.nvim_create_autocmd("BufWritePre", {
+            --     group = vim.api.nvim_create_augroup("AutoFormat", { clear = true })
+            --     pattern = "*",
+            --     callback = function()
+            --         vim.lsp.buf.format { async = false }
+            --
+            --     end,
+            -- })
         end
     }
 }
