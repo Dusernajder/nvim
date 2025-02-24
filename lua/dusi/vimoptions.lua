@@ -19,3 +19,11 @@ vim.keymap.set('i', 'jj', '<Esc>')
 
 vim.keymap.set('n', '<leader>n', '<cmd>bnext<CR>')
 vim.keymap.set('n', '<leader>p', '<cmd>bprev<CR>')
+
+-- Switching between open panes
+vim.keymap.set('n', '<leader>j', '<cmd>winc j<CR>')
+vim.keymap.set('n', '<leader>k', '<cmd>winc k<CR>')
+vim.keymap.set('n', '<leader>h', '<cmd>winc h<CR>')
+vim.keymap.set('n', '<leader>l', '<cmd>winc l<CR>')
+
+vim.keymap.set('n', '<leader>c', '<cmd>close<CR>')
