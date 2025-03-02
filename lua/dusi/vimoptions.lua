@@ -1,6 +1,6 @@
 -- BASIC SETTINGS --
 -- vim.opt.termguicolors = true
-vim.opt.background = "dark"
+--vim.opt.background = "dark"
 
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
@@ -27,3 +27,14 @@ vim.keymap.set('n', '<leader>h', '<cmd>winc h<CR>')
 vim.keymap.set('n', '<leader>l', '<cmd>winc l<CR>')
 
 vim.keymap.set('n', '<leader>c', '<cmd>close<CR>')
+
+-- Highlight when yanking (copying) text
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking (copying) text',
+  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+
