@@ -9,7 +9,7 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "csharp_ls", "ts_ls", "pyright" },
+				ensure_installed = { "lua_ls", "csharp_ls", "ts_ls", "pyright", "html" },
 			})
 		end,
 	},
@@ -20,8 +20,11 @@ return {
 			local lspconfig = require("lspconfig")
 			local util = require("lspconfig.util")
 
-			require("lspconfig").lua_ls.setup({
-                capabilities = capabilities,
+            -- misc
+            require("dusi.misc.razor")
+
+			lspconfig.lua_ls.setup({
+				capabilities = capabilities,
 				on_init = function(client)
 					if client.workspace_folders then
 						local path = client.workspace_folders[1].name
@@ -64,6 +67,26 @@ return {
 				end,
 				filetypes = { "cs" },
 				capabilities = capabilities,
+			})
+			lspconfig.html.setup({
+				capabilities = function()
+					local capabilities = vim.lsp.protocol.make_client_capabilities()
+					capabilities.textDocument.completion.completionItem.snippetSupport = true
+					return capabilities
+				end,
+				cmd = { "vscode-html-language-server", "--stdio" },
+				filetypes = { "html" },
+				init_options = {
+					configurationSection = { "html", "css", "javascript" },
+					embeddedLanguages = {
+						css = true,
+						javascript = true,
+					},
+				},
+				root_dir = function(fname)
+					return root_pattern(fname) or vim.loop.os_homedir()
+				end,
+				settings = {},
 			})
 
 			-- Buffer global keymaps
