@@ -15,7 +15,8 @@ return {
                 null_ls.builtins.formatting.black,
                 null_ls.builtins.formatting.isort,
 
-                require("none-ls-luacheck.diagnostics.luacheck"),
+
+                -- require("none-ls-luacheck.diagnostics.luacheck"),
                 require("none-ls.diagnostics.eslint_d"),
             },
         })
