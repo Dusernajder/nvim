@@ -28,7 +28,13 @@ vim.keymap.set('n', '<leader>l', '<cmd>winc l<CR>')
 
 vim.keymap.set('n', '<leader>c', '<cmd>close<CR>')
 
--- Highlight when yanking (copying) text
+
+-- black magic
+vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("n", "<leader>ra", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
+
+-- Highlight when yanking (copying) text 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
