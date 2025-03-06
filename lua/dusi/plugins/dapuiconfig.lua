@@ -24,20 +24,20 @@ return {
 			layouts = {
 				{
 					elements = {
-						{ id = "scopes", size = 0.25 },
+						"repl",
 						"breakpoints",
 						"stacks",
 						"watches",
 					},
-					size = 40, -- 40 columns
+					size = 45, -- 45 columns
 					position = "left",
 				},
 				{
 					elements = {
-						"repl",
 						"console",
+						{ id = "scopes", size = 0.65 },
 					},
-					size = 0.25, -- 25% of total lines
+					size = 0.22, -- 22% of total lines
 					position = "bottom",
 				},
 			},
@@ -82,5 +82,8 @@ return {
 		dap.listeners.after.event_exited["dapui_config"] = function()
 			dapui.close()
 		end
+		-- dap.listeners.after.event_stopped["dapui_config"] = function()
+		-- 	dapui.close()
+		-- end
 	end,
 }
