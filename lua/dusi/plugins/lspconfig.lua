@@ -19,16 +19,16 @@ return {
     {
         "neovim/nvim-lspconfig",
         config = function()
-            -- local capabilities = require("cmp_nvim_lsp").default_capabilities()
-            local capabilities = vim.lsp.protocol.make_client_capabilities()
-            capabilities.textDocument.completion.completionItem.snippetSupport = true
-            capabilities.textDocument.completion.completionItem.resolveSupport = {
-                properties = {
-                    "documentation",
-                    "detail",
-                    "additionalTextEdits",
-                },
-            }
+            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+            -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+            -- capabilities.textDocument.completion.completionItem.resolveSupport = {
+            --     properties = {
+            --         "documentation",
+            --         "detail",
+            --         "additionalTextEdits",
+            --     },
+            -- }
             local lspconfig = require("lspconfig")
             local util = require("lspconfig.util")
 
@@ -74,6 +74,25 @@ return {
                 filetypes = { "python" },
             })
 
+            lspconfig.clangd.setup({
+                capabilities = capabilities,
+                cmd = { "clangd" },
+                filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
+                root_dir = function(fname)
+                    return util.root_pattern(
+                        ".clangd",
+                        ".clang-tidy",
+                        ".clang-format",
+                        "compile_commands.json",
+                        "compile_flags.txt",
+                        "configure.ac" -- AutoTools
+                    )(fname) or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
+                end,
+                options = {
+                    IndentWidth = 4,
+                },
+            })
+
             lspconfig.omnisharp.setup({
                 cmd = { "/usr/local/bin/omnisharp/omnisharp", "--languageserver", "--hostPID", vim.fn.getpid() },
                 capabilities = capabilities,
@@ -91,7 +110,6 @@ return {
                     },
                 },
             })
-
             lspconfig.html.setup({
                 capabilities = function()
                     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -129,6 +147,7 @@ return {
                     -- Buffer local mappings
                     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
                     vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+
                     vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                     vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
                     vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
