@@ -76,7 +76,7 @@ return {
 
             lspconfig.clangd.setup({
                 capabilities = capabilities,
-                cmd = { "clangd" },
+                cmd = { "clangd", "--background-index", "--clang-tidy", "--log=verbose" },
                 filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
                 root_dir = function(fname)
                     return util.root_pattern(
