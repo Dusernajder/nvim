@@ -35,7 +35,7 @@ vim.keymap.set("n", "<leader>k", "<cmd>winc k<CR>")
 vim.keymap.set("n", "<leader>h", "<cmd>winc h<CR>")
 vim.keymap.set("n", "<leader>l", "<cmd>winc l<CR>")
 
-vim.keymap.set("n", "<leader>c", "<cmd>close<CR>")
+vim.keymap.set("n", "<leader>x", "<cmd>close<CR>")
 
 -- Create and close tab
 vim.keymap.set("n", "<leader>te", "<cmd>tabedit %<CR>")
