@@ -5,6 +5,8 @@ return {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-cmdline",
 		"hrsh7th/nvim-cmp",
+		"hrsh7th/cmp-nvim-lsp-signature-help",
+		"p00f/clangd_extensions.nvim",
 	},
 	{
 		"L3MON4D3/LuaSnip",
@@ -69,18 +71,31 @@ return {
 					["<C-f>"] = cmp.mapping.scroll_docs(4),
 					["<C-x>"] = cmp.mapping.complete(),
 					["<C-e>"] = cmp.mapping.abort(),
-					["<Tab>"] = cmp.mapping.confirm({ select = true }),
-					-- ["<CR>"] = cmp.mapping.confirm({
-					--     behavior = cmp.ConfirmBehavior.Replace,
-					--     select = true,
-					-- }),
+					-- ["<Tab>"] = cmp.mapping.complete({ select = true }),
+					["<CR>"] = cmp.mapping.confirm({
+						behavior = cmp.ConfirmBehavior.Replace,
+						select = true,
+					}),
 				}),
 				sources = cmp.config.sources({
 					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp_signature_help" },
 					{ name = "luasnip" }, -- For luasnip users.
 				}, {
 					{ name = "buffer" },
 				}),
+				sorting = {
+					comparators = {
+						cmp.config.compare.offset,
+						cmp.config.compare.exact,
+						cmp.config.compare.recently_used,
+						require("clangd_extensions.cmp_scores"),
+						cmp.config.compare.kind,
+						cmp.config.compare.sort_text,
+						cmp.config.compare.length,
+						cmp.config.compare.order,
+					},
+				},
 				formatting = {
 					format = function(entry, vim_item)
 						-- Add import text to completion menu
