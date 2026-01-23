@@ -2,21 +2,48 @@ return {
     "nvimtools/none-ls.nvim",
     dependencies = {
         "nvimtools/none-ls-extras.nvim",
-        "gbprod/none-ls-luacheck.nvim"
+        "gbprod/none-ls-luacheck.nvim",
     },
     config = function()
         local null_ls = require("null-ls")
 
         null_ls.setup({
             sources = {
-                null_ls.builtins.formatting.stylua,
-                null_ls.builtins.formatting.prettier,
-                null_ls.builtins.formatting.csharpier,
-                null_ls.builtins.formatting.black,
-                null_ls.builtins.formatting.isort,
+                -- Python
+                null_ls.builtins.formatting.isort.with({
+                    filetypes = { "python" },
+                }),
 
+                null_ls.builtins.formatting.black.with({
+                    filetypes = { "python" },
+                }),
 
-                -- require("none-ls-luacheck.diagnostics.luacheck"),
+                -- Lua
+                null_ls.builtins.formatting.stylua.with({
+                    filetypes = { "lua" },
+                }),
+
+                -- Web
+                null_ls.builtins.formatting.prettier.with({
+                    filetypes = {
+                        "javascript",
+                        "javascriptreact",
+                        "typescript",
+                        "typescriptreact",
+                        "json",
+                        "yaml",
+                        "markdown",
+                        "html",
+                        "css",
+                    },
+                }),
+
+                -- C#
+                null_ls.builtins.formatting.csharpier.with({
+                    filetypes = { "cs" },
+                }),
+
+                -- Diagnostics
                 require("none-ls.diagnostics.eslint_d"),
             },
         })
