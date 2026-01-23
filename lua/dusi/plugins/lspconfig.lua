@@ -13,10 +13,21 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "lua_ls", "ts_ls", "pyright", "html" },
+				ensure_installed = { "lua_ls", "ts_ls", "pyright", "html", "angularls" },
 				automatic_enable = {
 					exclude = { "OmniSharp", "pyright" },
 				},
+			})
+		end,
+	},
+
+	{
+		"ray-x/lsp_signature.nvim",
+		config = function()
+			require("lsp_signature").setup({
+				hint_enable = false,
+				floating_window = true,
+				handler_opts = { border = "rounded" },
 			})
 		end,
 	},
@@ -95,6 +106,70 @@ return {
 				capabilities = capabilities,
 			})
 
+			-- Angular
+			lspconfig.angularls.setup({
+				capabilities = capabilities,
+
+				cmd = {
+					"node",
+					vim.fn.expand(
+						"~/.local/share/nvim/mason/packages/angular-language-server/node_modules/@angular/language-server/index.js"
+					),
+					"--stdio",
+				},
+
+				on_new_config = function(new_config, new_root_dir)
+					new_config.cmd = {
+						"node",
+						vim.fn.expand(
+							"~/.local/share/nvim/mason/packages/angular-language-server/node_modules/@angular/language-server/index.js"
+						),
+						"--stdio",
+						"--tsProbeLocations",
+						new_root_dir,
+						"--ngProbeLocations",
+						new_root_dir,
+					}
+				end,
+
+				root_dir = util.root_pattern(
+					"angular.json",
+					"project.json", -- Nx
+					"nx.json",
+					"package.json"
+				),
+
+				filetypes = { "typescript", "html", "typescriptreact", "typescript.tsx" },
+			})
+
+			-- html
+			lspconfig.html.setup({
+				capabilities = function()
+					local capabilities = vim.lsp.protocol.make_client_capabilities()
+					capabilities.textDocument.completion.completionItem.snippetSupport = true
+					return capabilities
+				end,
+				cmd = { "vscode-html-language-server", "--stdio" },
+				filetypes = { "html" },
+				init_options = {
+					configurationSection = { "html", "css", "javascript" },
+					embeddedLanguages = {
+						css = true,
+						javascript = true,
+					},
+				},
+				root_dir = function(fname)
+					return root_pattern(fname) or vim.loop.os_homedir()
+				end,
+				settings = {},
+			})
+
+			vim.filetype.add({
+				pattern = {
+					[".*%.component%.html"] = "html",
+				},
+			})
+
 			-- C
 			lspconfig.clangd.setup({
 				capabilities = capabilities,
@@ -147,28 +222,6 @@ return {
 				},
 			})
 
-			-- html
-			lspconfig.html.setup({
-				capabilities = function()
-					local capabilities = vim.lsp.protocol.make_client_capabilities()
-					capabilities.textDocument.completion.completionItem.snippetSupport = true
-					return capabilities
-				end,
-				cmd = { "vscode-html-language-server", "--stdio" },
-				filetypes = { "html" },
-				init_options = {
-					configurationSection = { "html", "css", "javascript" },
-					embeddedLanguages = {
-						css = true,
-						javascript = true,
-					},
-				},
-				root_dir = function(fname)
-					return root_pattern(fname) or vim.loop.os_homedir()
-				end,
-				settings = {},
-			})
-
 			vim.diagnostic.config({
 				virtual_text = {
 					prefix = "●",
@@ -197,6 +250,7 @@ return {
 					vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
 					vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 
+					vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help)
 					vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 					vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
 					vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts)
