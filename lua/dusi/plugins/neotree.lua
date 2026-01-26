@@ -7,9 +7,25 @@ return {
         "MunifTanjim/nui.nvim",
     },
     config = function()
-        require("neo-tree").setup({
+        local neo_tree = require("neo-tree")
+
+        -- Set highlight colors BEFORE setup
+        vim.api.nvim_set_hl(0, "NeoTreeGitModified", { fg = "#e5c07b", bold = true })
+        vim.api.nvim_set_hl(0, "NeoTreeGitAdded", { fg = "#98c379", bold = true })
+        vim.api.nvim_set_hl(0, "NeoTreeGitDeleted", { fg = "#e06c75", bold = true })
+
+        neo_tree.setup({
             popup_border_style = "rounded",
+            visible = true,
+            hide_dotfiles = false,
+            hide_hidden = false,
             enable_git_status = true,
+            use_git_status_colors = true,
+            git_status = {
+                highlight_modified = "NeoTreeGitModified",
+                highlight_added = "NeoTreeGitAdded",
+                highlight_deleted = "NeoTreeGitDeleted",
+            },
             enable_diagnostics = true,
             window = {
                 position = "left",
@@ -19,40 +35,53 @@ return {
                     nowait = true,
                 },
                 mappings = {
-                    ["<space>"] = {
-                        "toggle_node",
-                        nowait = true, -- disable `nowait` if you have existing combos starting with this char that you want to use
-                    },
+                    ["<space>"] = { "toggle_node", nowait = true },
                     ["<2-LeftMouse>"] = "open",
-                    ["<cr>"] = "open",
-                    ["<esc>"] = "cancel", -- close preview or floating neo-tree window
+                    ["<cr>"] = { "open", config = { close = true } },
+                    ["<esc>"] = "cancel",
                     ["P"] = { "toggle_preview", config = { use_float = true, use_image_nvim = true } },
                     ["l"] = "focus_preview",
                     ["S"] = "open_split",
                     ["s"] = "open_vsplit",
                     ["t"] = "open_tabnew",
-                    -- ["<cr>"] = "open_drop",
-                    -- ["t"] = "open_tab_drop",
-                    --["P"] = "toggle_preview", -- enter preview mode, which shows the current node without focusing
                     ["C"] = "close_node",
-                    -- ['C'] = 'close_all_subnodes',
+                    ["H"] = "toggle_hidden",
                     ["z"] = "close_all_nodes",
-                    --["Z"] = "expand_all_nodes",
                     ["a"] = {
                         "add",
-                        -- this command supports BASH style brace expansion ("x{a,b,c}" -> xa,xb,xc). see `:h neo-tree-file-actions` for details
-                        -- some commands may take optional config options, see `:h neo-tree-mappings` for details
-                        config = {
-                            show_path = "none", -- "none", "relative", "absolute"
-                        },
+                        config = { show_path = "none" },
                     },
                 },
             },
+            filesystem = {
+                bind_to_cwd = false,
+                follow_current_file = {
+                    enabled = true,
+                    leave_dirs_open = true,
+                },
+                use_libuv_file_watcher = true,
+            },
         })
 
+        -- Reapply colors after colorscheme changes
+        vim.api.nvim_create_autocmd("ColorScheme", {
+            pattern = "*",
+            callback = function()
+                vim.api.nvim_set_hl(0, "NeoTreeGitModified", { fg = "#e5c07b", bold = true })
+                vim.api.nvim_set_hl(0, "NeoTreeGitAdded", { fg = "#98c379", bold = true })
+                vim.api.nvim_set_hl(0, "NeoTreeGitDeleted", { fg = "#e06c75", bold = true })
+            end,
+        })
+
+        -- Toggle/focus Neo-tree with cursor on current file
         vim.keymap.set("n", "<C-n>", function()
-            local command = require("neo-tree.command")
-            command.execute({ toggle = true, source = "filesystem", position = "left" })
+            require("neo-tree.command").execute({
+                toggle = true,
+                source = "filesystem",
+                position = "left",
+                reveal = true,
+                focus = true,
+            })
         end, { noremap = true, silent = true })
 
         -- Auto close Neo-tree when opening a file
