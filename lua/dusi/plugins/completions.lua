@@ -10,6 +10,15 @@ return {
     },
 
     {
+        "roobert/tailwindcss-colorizer-cmp.nvim",
+        config = function()
+            require("tailwindcss-colorizer-cmp").setup({
+                color_square_width = 2,
+            })
+        end,
+    },
+
+    {
         "L3MON4D3/LuaSnip",
         dependencies = {
             "saadparwaiz1/cmp_luasnip",
@@ -48,21 +57,6 @@ return {
                 library = { "nvim-dap-ui" },
             })
 
-            -- -- Create custom highlight group for completion menu
-            -- vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#2b2b2b", fg = "#bbbbbb" })
-            -- vim.api.nvim_set_hl(0, "CmpBorder", { bg = "#2b2b2b", fg = "#555555" })
-            -- vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#214283", fg = "#ffffff", bold = true })
-            --
-            -- -- Make sure these persist after colorscheme loads
-            -- vim.api.nvim_create_autocmd("ColorScheme", {
-            --     pattern = "*",
-            --     callback = function()
-            --         vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#2b2b2b", fg = "#bbbbbb" })
-            --         vim.api.nvim_set_hl(0, "CmpBorder", { bg = "#2b2b2b", fg = "#555555" })
-            --         vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#214283", fg = "#ffffff", bold = true })
-            --     end,
-            -- })
-
             cmp.setup({
                 snippet = {
                     expand = function(args)
@@ -85,21 +79,6 @@ return {
                     },
                 },
 
-                -- window = {
-                --     completion = cmp.config.window.bordered(),
-                --     documentation = cmp.config.window.bordered(),
-                -- },
-
-                -- window = {
-                --     completion = cmp.config.window.bordered({
-                --         border = "rounded",
-                --         winhighlight = "Normal:CmpNormal,FloatBorder:CmpBorder,CursorLine:PmenuSel,Search:None",
-                --     }),
-                --         documentation = cmp.config.window.bordered({
-                --             border = "rounded",
-                --         }),
-                -- },
-
                 mapping = cmp.mapping.preset.insert({
                     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
                     ["<C-f>"] = cmp.mapping.scroll_docs(4),
@@ -111,24 +90,6 @@ return {
                         select = true,
                     }),
                 }),
-
-                -- critical: do not auto-select
-                --     ["<CR>"] = cmp.mapping(function(fallback)
-                --         if cmp.visible() then
-                --             local entry = cmp.get_selected_entry()
-                --             if entry then
-                --                 cmp.confirm({
-                --                     behavior = cmp.ConfirmBehavior.Replace,
-                --                     select = true,
-                --                 })
-                --             else
-                --                 fallback()
-                --             end
-                --         else
-                --             fallback()
-                --         end
-                --     end, { "i", "s" }),
-                -- }),
 
                 sources = cmp.config.sources({
                     { name = "nvim_lsp" },
@@ -152,20 +113,28 @@ return {
                 },
 
                 formatting = {
-                    format = lspkind.cmp_format({
-                        mode = "symbol_text", -- show both icon and text
-                        -- maxwidth = 50,
-                        -- ellipsis_char = "...",
-                        before = function(entry, vim_item)
-                            -- Show import indicator
-                            if entry.source.name == "nvim_lsp" then
-                                if entry.completion_item.additionalTextEdits then
-                                    vim_item.menu = "[+Import]"
-                                end
+                    format = function(entry, vim_item)
+                        -- First apply tailwind colorizer
+                        vim_item = require("tailwindcss-colorizer-cmp").formatter(entry, vim_item)
+
+                        -- Then apply lspkind
+                        vim_item = lspkind.cmp_format({
+                            mode = "symbol_text",
+                        })(entry, vim_item)
+
+                        -- Your custom logic
+                        if entry.source.name == "nvim_lsp" then
+                            if entry.completion_item.additionalTextEdits then
+                                vim_item.menu = "[+Import]"
                             end
-                            return vim_item
-                        end,
-                    }),
+                        end
+
+                        if entry.source.name == "html-css" then
+                            vim_item.menu = "[CSS]"
+                        end
+
+                        return vim_item
+                    end,
                 },
             })
 
