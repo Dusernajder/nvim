@@ -45,6 +45,41 @@ return {
 			},
 		}
 
+		-- Python
+		require("mason-nvim-dap").setup({
+			ensure_installed = { "python" },
+			handlers = {
+				function(config)
+					require("mason-nvim-dap").default_setup(config)
+				end,
+			},
+		})
+
+		dap.configurations.python = {
+			{
+				type = "python",
+				request = "launch",
+				name = "Launch file",
+				program = "${file}",
+				cwd = "${workspaceFolder}",
+				console = "integratedTerminal",
+
+				-- Make sure the debuggee runs in the venv
+				pythonPath = function()
+					local cwd = vim.fn.getcwd()
+					local venv = cwd .. "/.venv/bin/python"
+					if vim.fn.executable(venv) == 1 then
+						return venv
+					end
+					return vim.fn.exepath("python") -- fallback
+				end,
+
+				-- important for stepping/subprocesses
+				justMyCode = false,
+				subProcess = true,
+			},
+		}
+
 		vim.keymap.set("n", "<Leader>b", function()
 			dap.toggle_breakpoint()
 		end)
@@ -59,7 +94,7 @@ return {
 			dap.continue()
 		end)
 		vim.keymap.set("n", "<F12>", function()
-            dap.terminate()
+			dap.terminate()
 		end)
 		vim.keymap.set("n", "<F6>", function()
 			dap.step_over()
