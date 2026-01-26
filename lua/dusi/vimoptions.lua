@@ -2,6 +2,7 @@
 -- vim.opt.termguicolors = true
 --vim.opt.background = "dark"
 
+vim.opt.termguicolors = true
 vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
@@ -47,15 +48,23 @@ vim.keymap.set("n", "<leader>ra", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+    desc = "Highlight when yanking (copying) text",
+    group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+    callback = function()
+        vim.highlight.on_yank()
+    end,
 })
 
+-- Apply colorizer
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "css", "scss", "html" },
+--   callback = function()
+--     require("colorizer").attach_to_buffer(0)
+--   end,
+-- })
+
 vim.keymap.set("n", "<leader>r", function()
-	return vim.fn.input("Build: ", vim.fn.getcwd() .. "/", "file")
+    return vim.fn.input("Build: ", vim.fn.getcwd() .. "/", "file")
 end)
 
 -- Clang switch between header/source
