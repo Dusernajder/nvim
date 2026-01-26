@@ -42,9 +42,6 @@ return {
                 null_ls.builtins.formatting.csharpier.with({
                     filetypes = { "cs" },
                 }),
-
-                -- Diagnostics
-                require("none-ls.diagnostics.eslint_d"),
             },
         })
     end,
