@@ -2,6 +2,7 @@ return {
     -- {
     --     "RishabhRD/nvim-lsputils",
     -- },
+
     {
         "williamboman/mason.nvim",
         config = function()
@@ -13,7 +14,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "ts_ls", "pyright", "html", "angularls" },
+                ensure_installed = { "lua_ls", "ts_ls", "pyright", "html", "angularls", "cssls", "tailwindcss", "emmet_ls" },
                 automatic_enable = {
                     exclude = { "OmniSharp", "pyright" },
                 },
@@ -34,6 +35,9 @@ return {
 
     {
         "neovim/nvim-lspconfig",
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+        },
         config = function()
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
             local util = require("lspconfig.util")
@@ -153,6 +157,40 @@ return {
                 },
             })
             vim.lsp.enable("cssls")
+
+            -- tailwindcss
+            vim.lsp.config("tailwindcss", {
+                capabilities = capabilities,
+                filetypes = {
+                    "html",
+                    "css",
+                    "scss",
+                    "javascript",
+                    "javascriptreact",
+                    "typescript",
+                    "typescriptreact",
+                    "vue",
+                    "svelte",
+                },
+            })
+            vim.lsp.enable("tailwindcss")
+
+            -- Emmet
+            vim.lsp.config("emmet_ls", {
+                capabilities = capabilities,
+                filetypes = {
+                    "html",
+                    "css",
+                    "scss",
+                    "javascript",
+                    "javascriptreact",
+                    "typescript",
+                    "typescriptreact",
+                    "vue",
+                    "svelte",
+                },
+            })
+            vim.lsp.enable("emmet_ls")
 
             -- C
             vim.lsp.config("clangd", {
