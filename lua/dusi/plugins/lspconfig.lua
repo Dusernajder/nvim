@@ -14,7 +14,15 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "ts_ls", "pyright", "html", "angularls", "cssls", "tailwindcss", "emmet_ls" },
+                ensure_installed = {
+                    "lua_ls",
+                    "ts_ls",
+                    "pyright",
+                    "html",
+                    "angularls",
+                    "cssls",
+                    "tailwindcss",
+                },
                 automatic_enable = {
                     exclude = { "OmniSharp", "pyright" },
                 },
@@ -103,49 +111,12 @@ return {
             })
             vim.lsp.enable("ts_ls")
 
-            -- Angular
-            vim.lsp.config("angularls", {
-                capabilities = capabilities,
-
-                cmd = {
-                    "node",
-                    vim.fn.expand(
-                        "~/.local/share/nvim/mason/packages/angular-language-server/node_modules/@angular/language-server/index.js"
-                    ),
-                    "--stdio",
-                },
-
-                on_new_config = function(new_config, new_root_dir)
-                    new_config.cmd = {
-                        "node",
-                        vim.fn.expand(
-                            "~/.local/share/nvim/mason/packages/angular-language-server/node_modules/@angular/language-server/index.js"
-                        ),
-                        "--stdio",
-                        "--tsProbeLocations",
-                        new_root_dir,
-                        "--ngProbeLocations",
-                        new_root_dir,
-                    }
-                end,
-
-                root_dir = util.root_pattern("angular.json", "project.json", "nx.json", "package.json"),
-
-                filetypes = { "typescript", "html", "typescriptreact", "typescript.tsx" },
-            })
-            vim.lsp.enable("angularls")
-
             -- html
             vim.lsp.config("html", {
                 capabilities = capabilities,
+                filetypes = { "html", "templ", "htmlangular" },
             })
             vim.lsp.enable("html")
-
-            vim.filetype.add({
-                pattern = {
-                    [".*%.component%.html"] = "html",
-                },
-            })
 
             -- CSS / SCSS / LESS
             vim.lsp.config("cssls", {
@@ -172,25 +143,22 @@ return {
                     "vue",
                     "svelte",
                 },
-            })
-            vim.lsp.enable("tailwindcss")
-
-            -- Emmet
-            vim.lsp.config("emmet_ls", {
-                capabilities = capabilities,
-                filetypes = {
-                    "html",
-                    "css",
-                    "scss",
-                    "javascript",
-                    "javascriptreact",
-                    "typescript",
-                    "typescriptreact",
-                    "vue",
-                    "svelte",
+                settings = {
+                    tailwindCSS = {
+                        lint = {
+                            cssConflict = "warning",
+                            invalidApply = "warning",
+                            invalidConfigPath = "warning",
+                            invalidScreen = "warning",
+                            invalidTailwindDirective = "warning",
+                            invalidVariant = "warning",
+                            recommendedVariantOrder = "warning",
+                        },
+                        validate = true,
+                    },
                 },
             })
-            vim.lsp.enable("emmet_ls")
+            vim.lsp.enable("tailwindcss")
 
             -- C
             vim.lsp.config("clangd", {
