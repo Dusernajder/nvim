@@ -2,7 +2,6 @@ return {
 	"mfussenegger/nvim-dap",
 	dependencies = {
 		"rcarriga/nvim-dap-ui",
-		"rcarriga/cmp-dap",
 		"jay-babu/mason-nvim-dap.nvim",
 		"jbyuki/one-small-step-for-vimkind",
 		"nvim-java/nvim-java",
