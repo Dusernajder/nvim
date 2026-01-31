@@ -1,0 +1,90 @@
+{
+  "coc.preferences.formatOnSave": false,
+  "coc.source.buffer.ignoreGitignore": true,
+  "coc.source.file.ignoreHidden": true,
+
+  "suggest.enablePreselect": true,
+  "suggest.noselect": false,
+  "suggest.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+  "suggest.completionItemKindLabels": {
+    "text": "Text",
+    "method": "Method",
+    "function": "Function",
+    "constructor": "Constructor",
+    "field": "Field",
+    "variable": "Variable",
+    "class": "Class",
+    "interface": "Interface",
+    "module": "Module",
+    "property": "Property",
+    "unit": "Unit",
+    "value": "Value",
+    "enum": "Enum",
+    "keyword": "Keyword",
+    "snippet": "Snippet",
+    "color": "Color",
+    "file": "File",
+    "reference": "Reference",
+    "folder": "Folder",
+    "enumMember": "EnumMember",
+    "constant": "Constant",
+    "struct": "Struct",
+    "event": "Event",
+    "operator": "Operator",
+    "typeParameter": "TypeParameter"
+  },
+
+  "signature.enable": true,
+  "signature.target": "float",
+  "signature.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+
+  "diagnostic.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+
+  "hover.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+
+  "Lua.workspace.library": [
+    "${3rd}/luv/library",
+    "/opt/homebrew/Cellar/neovim/0.11.6/share/nvim/runtime/lua",
+    "~/.local/share/nvim/lazy"
+  ],
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.diagnostics.globals": ["vim"],
+  "Lua.format.enable": true,
+  "Lua.format.defaultConfig": {
+    "indent_style": "space",
+    "indent_size": "4"
+  },
+
+  "prettier.enable": true,
+
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "black",
+  "python.sortImports.path": "isort",
+  "python.sortImports.args": [],
+  "python.linting.enabled": true,
+
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.suggest.completeFunctionCalls": true,
+  "javascript.suggest.completeFunctionCalls": true,
+
+  "emmet.showExpandedAbbreviation": "always",
+  "emmet.showAbbreviationSuggestions": true,
+  "emmet.showSuggestionsAsSnippets": true,
+  "emmet.includeLanguages": {
+    "htmlangular": "html"
+  },
+
+  "languageserver": {}
+}
