@@ -12,9 +12,6 @@ vim.g.coc_global_extensions = {
     "coc-class-css",
     "coc-tailwindcss",
 
-    -- frameworks
-    "coc-angular",
-
     -- language servers
     "coc-omnisharp",
     "coc-pyright",
