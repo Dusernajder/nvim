@@ -1,14 +1,16 @@
 {
   "coc.preferences.formatOnSave": false,
   "coc.source.buffer.ignoreGitignore": true,
+  "coc.source.buffer.enable": false,
   "coc.source.file.ignoreHidden": true,
-
   "suggest.enablePreselect": true,
   "suggest.noselect": false,
+
   "suggest.floatConfig": {
     "border": true,
     "rounded": true
   },
+
   "suggest.completionItemKindLabels": {
     "text": "Text",
     "method": "Method",
@@ -48,7 +50,6 @@
     "border": true,
     "rounded": true
   },
-
   "hover.floatConfig": {
     "border": true,
     "rounded": true
@@ -59,6 +60,7 @@
     "/opt/homebrew/Cellar/neovim/0.11.6/share/nvim/runtime/lua",
     "~/.local/share/nvim/lazy"
   ],
+
   "Lua.runtime.version": "LuaJIT",
   "Lua.diagnostics.globals": ["vim"],
   "Lua.format.enable": true,
@@ -66,25 +68,35 @@
     "indent_style": "space",
     "indent_size": "4"
   },
-
   "prettier.enable": true,
-
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "black",
   "python.sortImports.path": "isort",
   "python.sortImports.args": [],
   "python.linting.enabled": true,
-
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.suggest.completeFunctionCalls": true,
   "javascript.suggest.completeFunctionCalls": true,
 
-  "emmet.showExpandedAbbreviation": "always",
-  "emmet.showAbbreviationSuggestions": true,
-  "emmet.showSuggestionsAsSnippets": true,
-  "emmet.includeLanguages": {
-    "htmlangular": "html"
-  },
-
-  "languageserver": {}
+  "languageserver": {
+    "angular": {
+      "command": "ngserver",
+      "args": [
+        "--stdio",
+        "--tsProbeLocations",
+        "/opt/homebrew/lib/node_modules/typescript/lib",
+        "--ngProbeLocations",
+        "/opt/homebrew/lib/node_modules/@angular/language-server/lib"
+      ],
+      "filetypes": [
+        "ts",
+        "typescript",
+        "html",
+        "htmlangular",
+        "typescriptreact",
+        "typescript.tsx"
+      ],
+      "trace.server.verbosity": "verbose"
+    }
+  }
 }
