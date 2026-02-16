@@ -1,5 +1,4 @@
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>e", "<Cmd>CocCommand diagnostics.open<CR>", { desc = "Show diagnostics" })
 vim.keymap.set("n", "[d", "<Plug>(coc-diagnostic-prev)", { desc = "Previous diagnostic" })
 vim.keymap.set("n", "]d", "<Plug>(coc-diagnostic-next)", { desc = "Next diagnostic" })
 vim.keymap.set("n", "<leader>q", "<Cmd>CocList diagnostics<CR>", { desc = "Diagnostics list" })
