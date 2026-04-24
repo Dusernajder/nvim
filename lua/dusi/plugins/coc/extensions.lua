@@ -10,15 +10,15 @@ vim.g.coc_global_extensions = {
 
     -- misc / completions
     "coc-class-css",
-    "coc-tailwindcss",
+    "@yaegassy/coc-tailwindcss3",
 
     -- language servers
-    "coc-omnisharp",
     "coc-pyright",
     "coc-lua",
     "coc-tsserver",
     "coc-clangd",
     "coc-java",
+    "coc-sh",
 
     -- formatters
     "coc-prettier",
