@@ -69,7 +69,6 @@
     "indent_size": "4"
   },
 
-  "prettier.enable": true,
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "black",
   "python.sortImports.path": "isort",
@@ -78,6 +77,7 @@
   "pyright.inlayHints.variableTypes": false,
   "pyright.inlayHints.parameterTypes": false,
 
+  "prettier.enable": true,
   "typescript.preferences.includePackageJsonAutoImports": "on",
   "typescript.suggest.completeFunctionCalls": true,
   "javascript.suggest.completeFunctionCalls": true,
@@ -102,11 +102,5 @@
       ],
       "trace.server.verbosity": "verbose"
     }
-  },
-
-  "csharp-ls": {
-    "command": "csharp-ls",
-    "filetypes": ["cs"],
-    "rootPatterns": ["*.csproj", ".vim/", ".git/", ".hg/"]
   }
 }
