@@ -1,5 +1,5 @@
 {
-  "coc.nvim": { "branch": "release", "commit": "235b688f6b4b18c4cecb36aeceeb71d8d5bcac6f" },
+  "coc.nvim": { "branch": "release", "commit": "e682a2e0cef815b49b3bb79a0c6d0a430c8116c8" },
   "copilot.vim": { "branch": "release", "commit": "a12fd5672110c8aa7e3c8419e28c96943ca179be" },
   "darcula-dark.nvim": { "branch": "main", "commit": "285c1fe3225ef19ef2639a3080551ee9669f263b" },
   "gitsigns.nvim": { "branch": "main", "commit": "abf82a65f185bd54adc0679f74b7d6e1ada690c9" },
