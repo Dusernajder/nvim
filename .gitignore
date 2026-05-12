@@ -1,2 +1,3 @@
 .luarc.json
-./lua/dusi/plugins/coc/coc-csharp/*
+
+lua/dusi/plugins/coc/coc-csharp/*
