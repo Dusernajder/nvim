@@ -19,7 +19,7 @@ vim.g.coc_global_extensions = {
     "coc-clangd",
     "coc-java",
     "coc-sh",
-    "coc-csharp",
+    "@tcx4c70/coc-csharp",
 
     -- formatters
     "coc-prettier",
