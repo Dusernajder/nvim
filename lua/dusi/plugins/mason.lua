@@ -5,6 +5,7 @@ return {
             require("mason").setup()
         end,
     },
+
     {
         "jay-babu/mason-nvim-dap.nvim",
         dependencies = {
@@ -14,11 +15,10 @@ return {
         config = function()
             require("mason-nvim-dap").setup({
                 ensure_installed = {
-                    "python",      -- debugpy
-                    "codelldb",    -- C/C++/Rust
-                    "coreclr",     -- .NET (netcoredbg)
-                    "javadbg",     -- Java
-                    "javatest",    -- Java tests
+                    "python",   -- debugpy
+                    "codelldb", -- C/C++/Rust
+                    "javadbg",  -- Java
+                    "javatest", -- Java tests
                 },
                 automatic_installation = true,
             })
