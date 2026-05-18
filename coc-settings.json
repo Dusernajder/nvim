@@ -69,6 +69,11 @@
     "indent_size": "4"
   },
 
+  "dotnet.projects.enableAutomaticRestore": true,
+  "dotnet.backgroundAnalysis.analyzerDiagnosticsScope": "fullSolution",
+  "dotnet.backgroundAnalysis.compilerDiagnosticsScope": "fullSolution",
+  "dotnet.inlayHints.enableInlayHintsForParameters": true,
+
   "python.formatting.provider": "black",
   "python.formatting.blackPath": "black",
   "python.sortImports.path": "isort",
