@@ -1,0 +1,134 @@
+" ========================
+"     BASIC SETTINGS
+" ========================
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set number
+set relativenumber
+set clipboard=unnamed
+set scrolloff=10
+set clipboard=unnamedplus
+let mapleader = " "
+
+" ========================
+"     EDITING / GENERAL
+" ========================
+nnoremap <Esc> :nohlsearch<CR>
+nnoremap <leader>w :wa<CR>
+
+inoremap jj <Esc>
+inoremap jk <Esc>
+inoremap kk <Esc>
+
+xnoremap <leader>p "_dP
+nnoremap <leader>ra :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+nnoremap T :action ExtractMethod<CR>
+
+" ========================
+"     BUFFER / TABS
+" ========================
+nnoremap <leader>n :bnext<CR>
+nnoremap <leader>p :bprev<CR>
+nnoremap <leader>te :tabedit %<CR>
+nnoremap <leader>tc :tabclose<CR>
+nnoremap <leader>c :close<CR>
+
+" ========================
+"     SCROLLING
+" ========================
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" ========================
+"     VISUAL MODE
+" ========================
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap L :m '<-2<CR>gv=gv
+
+" ========================
+"     WINDOW NAVIGATION
+" ========================
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>h <C-w>h
+nnoremap <leader>l <C-w>l
+
+" ========================
+"     JETBRAINS LSP ACTIONS
+" ========================
+" Go to definition, type, usage
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gD :action GotoTypeDeclaration<CR>
+nnoremap gr :action FindUsages<CR>
+nnoremap gi :action GotoImplementation<CR>
+
+" Hover / Docs / Rename
+nnoremap K :action EditorShowHover<CR>
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+
+" Diagnostics
+nnoremap <leader>q :action ShowErrorsInProject<CR>
+nnoremap [d :action GotoPreviousError<CR>
+nnoremap ]d :action GotoNextError<CR>
+
+" Formatting
+nnoremap <leader>f :action ReformatCode<CR>
+nnoremap <leader>m :action OptimizeImports<CR>
+
+" ========================
+"     DAP-LIKE ACTIONS
+" ========================
+nnoremap <leader>b :action ToggleLineBreakpoint<CR>
+nnoremap <leader>cb :action ViewBreakpoints<CR>
+nnoremap <F5> :action Debug<CR>
+nnoremap <F12> :action Stop<CR>
+nnoremap <F6> :action StepOver<CR>
+nnoremap <F7> :action StepInto<CR>
+nnoremap <F8> :action StepOut<CR>
+
+" ========================
+"     PLACEHOLDER / BUILD
+" ========================
+nnoremap <leader>r :action CompileDirty<CR>
+nnoremap <leader>i :action ChooseRunConfiguration<CR>
+et clipboard^=ideaput
+
+" ========================
+"     SEARCH / TELESCOPE STYLE
+" ========================
+nnoremap <leader>sf :action GotoFile<CR>
+nnoremap <leader>sw :action Find<CR>
+nnoremap <leader>sg :action FindInPath<CR>
+nnoremap <leader>sd :action ShowErrorsInProject<CR>
+nnoremap <leader>ss :action SearchEverywhere<CR>
+nnoremap <leader>sr :action RecentFiles<CR>
+nnoremap <leader>s. :action RecentFiles<CR>
+
+" Yank highlight using Vimscript for IdeaVim
+augroup YankHighlight
+  autocmd!
+  autocmd TextYankPost * silent! call matchadd('Search', '\%'.line("'<").'l\_.*\%'.line("'>").'l', 100, -1)
+  autocmd TextYankPost * silent! call timer_start(200, { -> matchdelete(matchadd('Search', '\%'.line("'<").'l\_.*\%'.line("'>").'l')) })
+augroup END
+
+" Open Recent Files
+nnoremap <leader>e :action RecentFiles<CR>
+
+" Toggle line comment with 'gc'
+nnoremap gc :action CommentByLineComment<CR>
+vnoremap gc :action CommentByLineComment<CR>
+
+" Show Error Description
+nnoremap <leader>h :action ShowErrorDescription<CR>
+
+" Show Argument information
+nnoremap <leader>a :action ParameterInfo<CR>
+
+" Show TODO's
+nnoremap <leader>td :action ActivateTODOToolWindow<CR>
+
+" Reload ~/.ideavimrc
+nnoremap <leader>rl :source ~/.ideavimrc<CR>
