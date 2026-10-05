@@ -24,6 +24,16 @@ vim.keymap.set("n", "<leader>qi", function()
 end, { desc = "Quick fix" })
 
 
+-- Copilot keymaps
+vim.keymap.set("i", "gf", function()
+    local ok, suggestion = pcall(vim.fn["copilot#GetDisplayedSuggestion"])
+    if ok and suggestion.text ~= "" then
+        return vim.fn["copilot#Accept"]("")
+    end
+    -- No suggestion: type "gf" literally
+    return "gf"
+end, { expr = true, replace_keycodes = false, silent = true, desc = "Accept Copilot suggestion" })
+
 -- Completion keymaps
 vim.cmd([[
     inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm() : "\<CR>"
